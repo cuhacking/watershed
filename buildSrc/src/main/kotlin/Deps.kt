@@ -1,0 +1,28 @@
+@file:Suppress("ClassName", "ClassNaming", "Filename", "MatchingDeclarationName")
+
+object deps {
+    object dagger {
+        const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
+        const val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+    }
+
+    object junit {
+        const val api = "org.junit.jupiter:junit-jupiter-api:${Versions.junit}"
+        const val engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit}"
+    }
+
+    object ktor {
+        const val cio = "io.ktor:ktor-server-cio:${Versions.ktor}"
+    }
+
+    object plugins {
+        const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    }
+
+    object sqldelight {
+        const val driver = "com.squareup.sqldelight:jdbc-driver:${Versions.sqldelight}"
+    }
+
+    const val hikari = "com.zaxxer:HikariCP:4.0.2"
+    const val logback = "ch.qos.logback:logback-classic:1.2.3"
+}
