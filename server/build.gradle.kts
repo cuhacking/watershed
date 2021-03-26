@@ -14,6 +14,7 @@ dependencies {
     implementation(deps.sqldelight.driver)
     implementation(deps.hikari)
     implementation(deps.logback)
+    implementation(deps.postgresJdbc)
 
     testImplementation(kotlin("test-junit5"))
     testImplementation(deps.junit.api)
@@ -37,6 +38,10 @@ sqldelight {
     database("Database") {
         packageName = "com.cuhacking.watershed.db"
         dialect = "postgresql"
+        sourceFolders = listOf("sqldelight")
+        deriveSchemaFromMigrations = true
+        migrationOutputDirectory = file("$buildDir/resources/main/migrations")
+        migrationOutputFileFormat = ".sql"
     }
 }
 

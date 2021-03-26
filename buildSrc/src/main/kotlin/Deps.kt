@@ -25,4 +25,5 @@ object deps {
 
     const val hikari = "com.zaxxer:HikariCP:4.0.2"
     const val logback = "ch.qos.logback:logback-classic:1.2.3"
+    const val postgresJdbc = "org.postgresql:postgresql:${Versions.postgres}"
 }

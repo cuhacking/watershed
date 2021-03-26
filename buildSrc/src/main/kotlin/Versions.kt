@@ -6,4 +6,5 @@ object Versions {
     const val serialization = "1.1.0"
     const val sqldelight = "1.4.3"
     const val junit = "5.6.0"
+    const val postgres = "42.2.19"
 }

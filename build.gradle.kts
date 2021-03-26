@@ -13,9 +13,6 @@ version = "1.0-SNAPSHOT"
 
 allprojects {
     repositories {
-        //jcenter()
         mavenCentral()
-        //maven(url = "https://dl.bintray.com/kotlin/kotlinx")
-        //maven(url = "https://dl.bintray.com/kotlin/ktor")
     }
 }

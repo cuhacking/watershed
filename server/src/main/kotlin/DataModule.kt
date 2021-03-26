@@ -2,6 +2,7 @@ import com.squareup.sqldelight.sqlite.driver.asJdbcDriver
 import dagger.Module
 import dagger.Provides
 import com.cuhacking.watershed.db.Database
+import com.zaxxer.hikari.HikariConfig
 import javax.inject.Singleton
 import javax.sql.DataSource
 import com.zaxxer.hikari.HikariDataSource
@@ -18,6 +19,11 @@ class DataModule {
     @Provides
     @Singleton
     fun providesDataSource(): DataSource {
-        return HikariDataSource()
+        val config = HikariConfig();
+        config.jdbcUrl = "jdbc:postgresql://localhost:5432/watershed"
+        config.username = "postgres"
+        config.password = "password"
+
+        return HikariDataSource(config)
     }
 }
