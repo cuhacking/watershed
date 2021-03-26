@@ -1,0 +1,5 @@
+get:
+SELECT * FROM user WHERE id = :id;
+
+getAll:
+SELECT * FROM user;
