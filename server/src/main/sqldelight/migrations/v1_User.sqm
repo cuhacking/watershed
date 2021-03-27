@@ -4,9 +4,3 @@ CREATE TABLE user (
     password    TEXT NOT NULL,
     email       TEXT NOT NULL
 );
-
-get:
-SELECT * FROM user WHERE id = :id;
-
-getAll:
-SELECT * FROM user;
