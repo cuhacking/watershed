@@ -7,4 +7,6 @@ object Versions {
     const val sqldelight = "1.4.3"
     const val junit = "5.6.0"
     const val postgres = "42.2.19"
+    const val flyway = "7.7.2"
+    const val jbcrypt = "0.4"
 }

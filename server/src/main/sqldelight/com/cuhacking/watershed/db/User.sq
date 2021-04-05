@@ -1,5 +1,8 @@
 get:
-SELECT * FROM user WHERE id = :id;
+SELECT * FROM public.user WHERE id = ?;
 
 getAll:
-SELECT * FROM user;
+SELECT * FROM public.user;
+
+create:
+INSERT INTO public.user (name, email, password) VALUES (?, ?, ?);
