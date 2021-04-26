@@ -7,19 +7,28 @@ plugins {
     application
 }
 
-dependencies {
-    implementation(deps.ktor.cio)
-    implementation(deps.sqldelight.driver)
-    implementation(deps.hikari)
-    implementation(deps.logback)
-    implementation(deps.postgresJdbc)
+kotlin {
+    // Add generated kotlin-inject sources
+    sourceSets {
+        getByName("main") {
+            kotlin.srcDir("$buildDir/generated/ksp/main/kotlin")
+        }
+    }
 
-    ksp(deps.inject.compiler)
-    implementation(deps.inject.runtime)
+    dependencies {
+        implementation(deps.ktor.cio)
+        implementation(deps.sqldelight.driver)
+        implementation(deps.hikari)
+        implementation(deps.logback)
+        implementation(deps.postgresJdbc)
 
-    testImplementation(kotlin("test-junit5"))
-    testImplementation(deps.junit.api)
-    testRuntimeOnly(deps.junit.engine)
+        ksp(deps.inject.compiler)
+        implementation(deps.inject.runtime)
+
+        testImplementation(kotlin("test-junit5"))
+        testImplementation(deps.junit.api)
+        testRuntimeOnly(deps.junit.engine)
+    }
 }
 
 tasks.test {
