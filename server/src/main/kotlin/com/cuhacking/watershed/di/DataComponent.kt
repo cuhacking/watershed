@@ -1,24 +1,23 @@
+package com.cuhacking.watershed.di
+
 import com.squareup.sqldelight.sqlite.driver.asJdbcDriver
-import dagger.Module
-import dagger.Provides
 import com.cuhacking.watershed.db.Database
 import com.zaxxer.hikari.HikariConfig
-import javax.inject.Singleton
 import javax.sql.DataSource
 import com.zaxxer.hikari.HikariDataSource
+import me.tatarka.inject.annotations.Component
+import me.tatarka.inject.annotations.Provides
 
-@Module
-class DataModule {
-
-    @Provides
+@Singleton
+@Component
+abstract class DataComponent {
     @Singleton
-    fun providesDatabase(dataSource: DataSource): Database {
-        return Database(dataSource.asJdbcDriver())
-    }
-
     @Provides
+    fun database(dataSource: DataSource): Database = Database(dataSource.asJdbcDriver())
+
     @Singleton
-    fun providesDataSource(): DataSource {
+    @Provides
+    open fun dataSource(): DataSource {
         val config = HikariConfig();
         config.jdbcUrl = "jdbc:postgresql://localhost:5432/watershed"
         config.username = "postgres"

@@ -1,3 +1,6 @@
+import com.cuhacking.watershed.di.ApplicationComponent
+import com.cuhacking.watershed.di.DataComponent
+import com.cuhacking.watershed.di.create
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.response.*
@@ -5,24 +8,12 @@ import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.cio.*
 import io.ktor.server.engine.embeddedServer
-import resources.UserResource
 import org.slf4j.event.Level
-import javax.inject.Inject
-
-class Main {
-    private val appComponent = DaggerApplicationComponent.create()
-
-    @Inject
-    lateinit var userResource: UserResource
-
-    init {
-        appComponent.inject(this)
-    }
-}
 
 fun main() {
+    val dataComponent: DataComponent = DataComponent::class.create()
+    val appComponent: ApplicationComponent = ApplicationComponent::class.create(dataComponent)
 
-    val main = Main()
     embeddedServer(CIO, port = 8080, host = "127.0.0.1") {
         install(CallLogging) {
             level = Level.DEBUG
@@ -35,7 +26,7 @@ fun main() {
                 call.respond("Hello world!")
             }
 
-            with(main.userResource) {
+            with(appComponent.userResource) {
                 routing()
             }
         }

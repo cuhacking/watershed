@@ -5,9 +5,10 @@ import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import com.cuhacking.watershed.db.Database
-import javax.inject.Inject
+import me.tatarka.inject.annotations.Inject
 
-class UserResource @Inject constructor(private val database: Database) {
+@Inject
+class UserResource(private val database: Database) {
 
     fun Routing.routing() {
         route("/user") {

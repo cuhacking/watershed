@@ -2,24 +2,24 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
-    kotlin("kapt")
     id("com.squareup.sqldelight") version Versions.sqldelight
+    id("com.google.devtools.ksp") apply true
     application
 }
 
 dependencies {
     implementation(deps.ktor.cio)
-    implementation(deps.dagger.dagger)
-    kapt(deps.dagger.compiler)
     implementation(deps.sqldelight.driver)
     implementation(deps.hikari)
     implementation(deps.logback)
     implementation(deps.postgresJdbc)
 
+    ksp(deps.inject.compiler)
+    implementation(deps.inject.runtime)
+
     testImplementation(kotlin("test-junit5"))
     testImplementation(deps.junit.api)
     testRuntimeOnly(deps.junit.engine)
-    kaptTest(deps.dagger.compiler)
 }
 
 tasks.test {
@@ -43,8 +43,4 @@ sqldelight {
         migrationOutputDirectory = file("$buildDir/resources/main/migrations")
         migrationOutputFileFormat = ".sql"
     }
-}
-
-kapt {
-    correctErrorTypes = true
 }

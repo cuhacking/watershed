@@ -23,6 +23,11 @@ object deps {
         const val driver = "com.squareup.sqldelight:jdbc-driver:${Versions.sqldelight}"
     }
 
+    object inject {
+        const val compiler = "me.tatarka.inject:kotlin-inject-compiler-ksp:${Versions.inject}"
+        const val runtime = "me.tatarka.inject:kotlin-inject-runtime:${Versions.inject}"
+    }
+
     const val hikari = "com.zaxxer:HikariCP:4.0.2"
     const val logback = "ch.qos.logback:logback-classic:1.2.3"
     const val postgresJdbc = "org.postgresql:postgresql:${Versions.postgres}"
