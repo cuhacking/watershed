@@ -18,6 +18,7 @@ kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
 
 ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
 ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+ktor-gson = { module = "io.ktor:ktor-gson", version.ref = "ktor" }
 
 testContainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testContainers" }
 testContainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testContainers" }

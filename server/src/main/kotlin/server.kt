@@ -1,5 +1,6 @@
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.gson.*
 import io.ktor.response.*
 import io.ktor.routing.get
 import io.ktor.routing.routing
@@ -25,6 +26,12 @@ fun Application.installFeatures() {
         level = Level.DEBUG
     }
     install(AutoHeadResponse)
+    install(ContentNegotiation) {
+        gson {
+            setPrettyPrinting()
+            disableHtmlEscaping()
+        }
+    }
 }
 
 private fun Application.configure() {

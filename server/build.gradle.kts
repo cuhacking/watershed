@@ -5,12 +5,14 @@ plugins {
     kotlin("kapt")
     kotlin("plugin.serialization") version "1.4.32"
     id("com.squareup.sqldelight") version "1.4.3"
+    id("org.flywaydb.flyway") version "7.8.2"
     application
 }
 
 dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.ktor.server.cio)
+    implementation(libs.ktor.gson)
 
     implementation(libs.dagger.core)
     kapt(libs.dagger.compiler)
@@ -51,6 +53,15 @@ sqldelight {
         migrationOutputDirectory = file("$buildDir/resources/main/migrations")
         migrationOutputFileFormat = ".sql"
     }
+}
+
+println("filesystem:$buildDir/resources/main/migrations")
+
+flyway {
+    url = "jdbc:postgresql://localhost:5432/watershed"
+    user = "postgres"
+    password = "password"
+    locations = arrayOf("filesystem:$buildDir/resources/main/migrations")
 }
 
 kapt {
