@@ -3,23 +3,31 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     kotlin("kapt")
-    id("com.squareup.sqldelight") version Versions.sqldelight
+    kotlin("plugin.serialization") version "1.4.32"
+    id("com.squareup.sqldelight") version "1.4.3"
     application
 }
 
 dependencies {
-    implementation(deps.ktor.cio)
-    implementation(deps.dagger.dagger)
-    kapt(deps.dagger.compiler)
-    implementation(deps.sqldelight.driver)
-    implementation(deps.hikari)
-    implementation(deps.logback)
-    implementation(deps.postgresJdbc)
+    implementation(libs.kotlinx.serialization)
+    implementation(libs.ktor.server.cio)
+
+    implementation(libs.dagger.core)
+    kapt(libs.dagger.compiler)
+
+    implementation(libs.sqldelight.driver.jdbc)
+    implementation(libs.hikari)
+    implementation(libs.logback)
+    implementation(libs.jdbc.postgres)
+    implementation(libs.kaml)
 
     testImplementation(kotlin("test-junit5"))
-    testImplementation(deps.junit.api)
-    testRuntimeOnly(deps.junit.engine)
-    kaptTest(deps.dagger.compiler)
+    testImplementation(libs.junit.api)
+    testImplementation(libs.junit.params)
+    testImplementation(libs.ktor.server.test)
+    testImplementation(libs.bundles.testContainers)
+    testRuntimeOnly(libs.junit.engine)
+    kaptTest(libs.dagger.compiler)
 }
 
 tasks.test {

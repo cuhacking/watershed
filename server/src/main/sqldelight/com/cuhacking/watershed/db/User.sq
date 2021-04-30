@@ -3,3 +3,6 @@ SELECT * FROM user WHERE id = :id;
 
 getAll:
 SELECT * FROM user;
+
+create:
+INSERT INTO user (name, password, email) VALUES ?;
