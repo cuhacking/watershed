@@ -1,3 +1,4 @@
+import com.charleskorn.kaml.Yaml
 import com.squareup.sqldelight.sqlite.driver.asJdbcDriver
 import dagger.Module
 import dagger.Provides
@@ -6,6 +7,8 @@ import com.zaxxer.hikari.HikariConfig
 import javax.inject.Singleton
 import javax.sql.DataSource
 import com.zaxxer.hikari.HikariDataSource
+import config.Config
+import java.io.File
 
 @Module
 class DataModule {
@@ -18,12 +21,21 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesDataSource(): DataSource {
-        val config = HikariConfig();
-        config.jdbcUrl = "jdbc:postgresql://localhost:5432/watershed"
-        config.username = "postgres"
-        config.password = "password"
+    fun providesDataSource(config: Config): DataSource {
+        val hikariConfig = HikariConfig();
+        hikariConfig.jdbcUrl = config.database.jdbcUrl
+        hikariConfig.username = config.database.username
+        hikariConfig.password = config.database.password
 
-        return HikariDataSource(config)
+        return HikariDataSource(hikariConfig)
+    }
+
+    @Provides
+    @Singleton
+    fun providesConfig(): Config {
+        //TODO: variable config path -> command line arg?
+        val configString = File("config.yml").readText()
+        return Yaml.default.decodeFromString(Config.serializer(), configString)
+
     }
 }

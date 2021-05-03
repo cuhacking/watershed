@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath(deps.plugins.kotlin)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32")
     }
 }
 

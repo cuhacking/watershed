@@ -1,5 +1,6 @@
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.gson.*
 import io.ktor.response.*
 import io.ktor.routing.get
 import io.ktor.routing.routing
@@ -20,24 +21,35 @@ class Main {
     }
 }
 
-fun main() {
+fun Application.installFeatures() {
+    install(CallLogging) {
+        level = Level.DEBUG
+    }
+    install(AutoHeadResponse)
+    install(ContentNegotiation) {
+        gson {
+            setPrettyPrinting()
+            disableHtmlEscaping()
+        }
+    }
+}
 
+private fun Application.configure() {
     val main = Main()
-    embeddedServer(CIO, port = 8080, host = "127.0.0.1") {
-        install(CallLogging) {
-            level = Level.DEBUG
+    installFeatures()
+    routing {
+        get("/") {
+            call.application.environment.log.info("This is a hello world call")
+            call.respond("Hello world!")
         }
-        install(AutoHeadResponse)
 
-        routing {
-            get("/") {
-                call.application.environment.log.info("This is a hello world call")
-                call.respond("Hello world!")
-            }
-
-            with(main.userResource) {
-                routing()
-            }
+        with(main.userResource) {
+            routing()
         }
-    }.start(wait = true)
+    }
+}
+
+
+fun main() {
+    embeddedServer(CIO, port = 8080, host = "127.0.0.1", module = Application::configure).start(wait = true)
 }
