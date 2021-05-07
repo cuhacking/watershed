@@ -69,12 +69,10 @@ abstract class AbstractTest {
         val jdbcUrl = "jdbc:postgresql://$address:$port/watershed"
         val config = ConfigFactory.createConfig(jdbcUrl, DB_USERNAME, DB_PASSWORD)
         testMain = TestMain(config)
-        println(System.getProperty("user.dir"))
         val flyway = Flyway.configure()
             .locations("filesystem:build/resources/main/migrations")
             .dataSource(jdbcUrl, DB_USERNAME, DB_PASSWORD)
             .load()
-
         flyway.migrate()
     }
 }

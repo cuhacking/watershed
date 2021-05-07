@@ -7,13 +7,19 @@ import io.ktor.routing.*
 import com.cuhacking.watershed.db.Database
 import io.ktor.request.*
 import com.cuhacking.watershed.db.Users
+import com.cuhacking.watershed.model.InputUser
+import com.cuhacking.watershed.model.OutputUser
 import com.cuhacking.watershed.model.User
 import org.mindrot.jbcrypt.BCrypt
 import java.util.*
 import javax.inject.Inject
 
-private fun User.toSQLDelight() : Users {
-    return Users(uuid, name, password, email)
+private fun InputUser.toSQLDelight() : Users {
+    // Generate a UUID and hash their password
+    val newUuid = uuid ?: UUID.randomUUID().toString()
+    val newPassword = BCrypt.hashpw(password, BCrypt.gensalt())
+
+    return Users(newUuid, name, newPassword, email)
 }
 
 class UserResource @Inject constructor(private val database: Database) {
@@ -21,29 +27,19 @@ class UserResource @Inject constructor(private val database: Database) {
     fun Routing.routing() {
         route("/user") {
             get("/") {
-                val list = database.usersQueries.getAll{ uuid: String, name: String, email: String ->
-                    User(uuid=uuid, name=name, email=email)
-                }.executeAsList();
+                val list = database.usersQueries.getAll(::OutputUser).executeAsList();
                 call.respond(list)
             }
 
             post("/") {
-                val user = call.receive<User>()
-
-                // Generate a UUID and hash their password
-                val uuid = user.uuid.ifBlank { UUID.randomUUID().toString() }
-                val password = BCrypt.hashpw(user.password, BCrypt.gensalt())
-
-                val userToSave = user.copy(uuid=uuid, password=password)
-                database.usersQueries.create(userToSave.toSQLDelight())
+                val user = call.receive<InputUser>()
+                database.usersQueries.create(user.toSQLDelight())
                 call.respond(HttpStatusCode.OK)
             }
 
             get("/{userId}") {
                 val userId = call.parameters["userId"] ?: return@get call.respond(HttpStatusCode.NotFound)
-                val user = database.usersQueries.get(userId) { uuid: String, name: String, email: String ->
-                    User(uuid = uuid, name = name, email = email)
-                }.executeAsOneOrNull() ?: return@get call.respond(HttpStatusCode.NotFound)
+                val user = database.usersQueries.get(userId, ::OutputUser).executeAsOneOrNull() ?: return@get call.respond(HttpStatusCode.NotFound)
                 call.respond(user)
             }
 
