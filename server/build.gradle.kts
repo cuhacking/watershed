@@ -42,6 +42,14 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+tasks.register("migrate") {
+    val generateMigrations = tasks["generateMainDatabaseMigrations"]
+    val runMigrations = tasks["flywayMigrate"]
+    dependsOn(generateMigrations)
+    dependsOn(runMigrations)
+    runMigrations.mustRunAfter(generateMigrations)
+}
+
 application {
     mainClassName = "ServerKt"
 }
