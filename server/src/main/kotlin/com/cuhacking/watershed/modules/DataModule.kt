@@ -1,4 +1,5 @@
-import com.charleskorn.kaml.Yaml
+package com.cuhacking.watershed.modules
+
 import com.squareup.sqldelight.sqlite.driver.asJdbcDriver
 import dagger.Module
 import dagger.Provides
@@ -7,11 +8,10 @@ import com.zaxxer.hikari.HikariConfig
 import javax.inject.Singleton
 import javax.sql.DataSource
 import com.zaxxer.hikari.HikariDataSource
-import config.Config
-import java.io.File
+import com.cuhacking.watershed.config.Config
 
 @Module
-class DataModule {
+class DataModule(val config: Config) {
 
     @Provides
     @Singleton
@@ -22,7 +22,7 @@ class DataModule {
     @Provides
     @Singleton
     fun providesDataSource(config: Config): DataSource {
-        val hikariConfig = HikariConfig();
+        val hikariConfig = HikariConfig()
         hikariConfig.jdbcUrl = config.database.jdbcUrl
         hikariConfig.username = config.database.username
         hikariConfig.password = config.database.password
@@ -31,11 +31,5 @@ class DataModule {
     }
 
     @Provides
-    @Singleton
-    fun providesConfig(): Config {
-        //TODO: variable config path -> command line arg?
-        val configString = File("config.yml").readText()
-        return Yaml.default.decodeFromString(Config.serializer(), configString)
-
-    }
+    fun providesConfig(): Config = config
 }

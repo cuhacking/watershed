@@ -1,5 +1,7 @@
 [versions]
 dagger = "2.31.2"
+flyway = "7.8.2"
+jbcrypt = "0.4"
 junit = "5.6.0"
 ktor = "1.5.1"
 testContainers = "1.15.2"
@@ -10,6 +12,10 @@ dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = 
 
 sqldelight-driver-jdbc = "com.squareup.sqldelight:jdbc-driver:1.4.3"
 
+flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+
+jbcrypt = { module = "org.mindrot:jbcrypt", version.ref = "jbcrypt" }
+
 junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
 junit-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junit-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit" }
@@ -18,10 +24,11 @@ kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
 
 ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
 ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
-ktor-gson = { module = "io.ktor:ktor-gson", version.ref = "ktor" }
+ktor-serialization = { module = "io.ktor:ktor-serialization", version.ref = "ktor" }
 
 testContainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testContainers" }
 testContainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testContainers" }
+testContainers-postgres = { module = "org.testcontainers:postgresql", version.ref = "testContainers" }
 
 hikari = "com.zaxxer:HikariCP:4.0.2"
 logback = "ch.qos.logback:logback-classic:1.2.3"
@@ -29,4 +36,4 @@ jdbc-postgres = "org.postgresql:postgresql:42.2.19"
 kaml = "com.charleskorn.kaml:kaml:0.30.0"
 
 [bundles]
-testContainers = ["testContainers-core", "testContainers-junit"]
+testContainers = ["testContainers-core", "testContainers-junit", "testContainers-postgres"]
