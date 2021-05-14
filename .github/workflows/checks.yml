@@ -30,7 +30,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run checks
-        run: ./gradlew check
+        run: ./gradlew generateMainDatabaseMigrations check
 
       - name: Upload test artifacts
         uses: actions/upload-artifact@v2

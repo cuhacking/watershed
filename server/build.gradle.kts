@@ -25,6 +25,7 @@ dependencies {
     implementation(libs.jdbc.postgres)
     implementation(libs.kaml)
     implementation(libs.jbcrypt)
+    implementation(libs.kotlinArgparser)
 
     testImplementation(kotlin("test-junit5"))
     testImplementation(libs.junit.api)
@@ -60,7 +61,7 @@ tasks.register("migrate") {
 }
 
 application {
-    mainClassName = "ServerKt"
+    mainClassName = "com.cuhacking.watershed.ServerKt"
 }
 
 sqldelight {

@@ -13,8 +13,7 @@ data class DatabaseConfig(
 @Serializable
 data class Config(val database: DatabaseConfig)
 
-class ConfigFactory {
-    companion object {
+object ConfigFactory {
         fun createConfig(jdbcUrl: String, username: String, password: String) : Config {
             val databaseConfig = DatabaseConfig(jdbcUrl, username, password)
             return Config(databaseConfig)
@@ -24,6 +23,4 @@ class ConfigFactory {
             val configString = File(filePath).readText()
             return Yaml.default.decodeFromString(Config.serializer(), configString)
         }
-    }
-
 }

@@ -1,10 +1,10 @@
-get:
+getByUuid:
 SELECT uuid, name, email FROM users WHERE uuid = :uuid;
 
 getAll:
 SELECT uuid, name, email FROM users;
 
-getFullUser:
+getFullUserByUuid:
 SELECT * FROM users WHERE uuid = :uuid;
 
 create:

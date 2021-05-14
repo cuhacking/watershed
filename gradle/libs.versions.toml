@@ -4,6 +4,7 @@ flyway = "7.8.2"
 jbcrypt = "0.4"
 junit = "5.6.0"
 ktor = "1.5.1"
+kotlinArgparser = "2.0.7"
 testContainers = "1.15.2"
 
 [libraries]
@@ -19,6 +20,8 @@ jbcrypt = { module = "org.mindrot:jbcrypt", version.ref = "jbcrypt" }
 junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
 junit-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junit-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit" }
+
+kotlinArgparser = { module = "com.xenomachina:kotlin-argparser", version.ref = "kotlinArgparser" }
 
 kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
 
