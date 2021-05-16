@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     kotlin("jvm")
@@ -12,7 +14,7 @@ plugins {
 dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.ktor.server.cio)
-    implementation(libs.ktor.gson)
+    implementation(libs.ktor.serialization)
 
     implementation(libs.dagger.core)
     kapt(libs.dagger.compiler)
@@ -22,26 +24,44 @@ dependencies {
     implementation(libs.logback)
     implementation(libs.jdbc.postgres)
     implementation(libs.kaml)
+    implementation(libs.jbcrypt)
+    implementation(libs.kotlinArgparser)
 
     testImplementation(kotlin("test-junit5"))
     testImplementation(libs.junit.api)
     testImplementation(libs.junit.params)
     testImplementation(libs.ktor.server.test)
     testImplementation(libs.bundles.testContainers)
+    testImplementation(libs.flyway.core)
     testRuntimeOnly(libs.junit.engine)
     kaptTest(libs.dagger.compiler)
 }
 
 tasks.test {
     useJUnitPlatform()
+    testLogging {
+        events(FAILED, STANDARD_ERROR, SKIPPED)
+        exceptionFormat = FULL
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+    }
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+tasks.register("migrate") {
+    val generateMigrations = tasks["generateMainDatabaseMigrations"]
+    val runMigrations = tasks["flywayMigrate"]
+    dependsOn(generateMigrations)
+    dependsOn(runMigrations)
+    runMigrations.mustRunAfter(generateMigrations)
+}
+
 application {
-    mainClassName = "ServerKt"
+    mainClassName = "com.cuhacking.watershed.ServerKt"
 }
 
 sqldelight {
@@ -54,8 +74,6 @@ sqldelight {
         migrationOutputFileFormat = ".sql"
     }
 }
-
-println("filesystem:$buildDir/resources/main/migrations")
 
 flyway {
     url = "jdbc:postgresql://localhost:5432/watershed"

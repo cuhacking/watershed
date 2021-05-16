@@ -1,11 +1,14 @@
-get:
-SELECT * FROM users WHERE id = :id;
+getByUuid:
+SELECT uuid, name, email FROM users WHERE uuid = :uuid;
 
 getAll:
-SELECT * FROM users;
+SELECT uuid, name, email FROM users;
+
+getFullUserByUuid:
+SELECT * FROM users WHERE uuid = :uuid;
 
 create:
-INSERT INTO users (name, password, email) VALUES ?;
+INSERT INTO users (uuid, name, password, email) VALUES ?;
 
 delete:
-DELETE FROM users WHERE id = :id;
+DELETE FROM users WHERE uuid = :uuid;
