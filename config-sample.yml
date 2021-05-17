@@ -1,4 +1,4 @@
 database:
-  jdbcUrl:
-  username:
-  password:
+  jdbcUrl: <e.g. "jdbc:postgresql://localhost:5432/database_name">
+  username: <e.g. "postgres">
+  password: <e.g. "password">
