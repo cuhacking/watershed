@@ -11,8 +11,16 @@ import io.ktor.server.cio.*
 import io.ktor.server.engine.embeddedServer
 import com.cuhacking.watershed.modules.DataModule
 import com.cuhacking.watershed.resources.UserResource
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
+import io.bkbn.kompendium.Kompendium.openApiSpec
+import io.bkbn.kompendium.models.oas.OpenApiSpec
+import io.bkbn.kompendium.routes.openApi
+import io.bkbn.kompendium.swagger.swaggerUI
+import io.ktor.jackson.*
+import io.ktor.webjars.*
 import org.slf4j.event.Level
 import javax.inject.Inject
 
@@ -42,8 +50,13 @@ fun Application.installFeatures() {
     }
     install(AutoHeadResponse)
     install(ContentNegotiation) {
-        json()
+        jackson {
+            enable(SerializationFeature.INDENT_OUTPUT)
+            setSerializationInclusion(JsonInclude.Include.NON_NULL)
+        }
+        //json()
     }
+    install(Webjars)
 }
 
 private fun Application.configure(args: Array<String>) {
@@ -51,6 +64,8 @@ private fun Application.configure(args: Array<String>) {
         val main = Main(config)
         installFeatures()
         routing {
+            openApi(openApiSpec)
+            swaggerUI()
             get("/") {
                 call.application.environment.log.info("This is a hello world call")
                 call.respond("Hello world!")

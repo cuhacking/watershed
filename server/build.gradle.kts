@@ -15,6 +15,8 @@ dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.ktor.server.cio)
     implementation(libs.ktor.serialization)
+    implementation(libs.ktor.webjars)
+    implementation(libs.ktor.jackson)
 
     implementation(libs.dagger.core)
     kapt(libs.dagger.compiler)
@@ -26,6 +28,8 @@ dependencies {
     implementation(libs.kaml)
     implementation(libs.jbcrypt)
     implementation(libs.kotlinArgparser)
+    implementation(libs.kompendium.core)
+    implementation(libs.kompendium.swaggerui)
 
     testImplementation(kotlin("test-junit5"))
     testImplementation(libs.junit.api)

@@ -7,8 +7,10 @@ import io.ktor.routing.*
 import com.cuhacking.watershed.db.Database
 import io.ktor.request.*
 import com.cuhacking.watershed.db.Users
+import com.cuhacking.watershed.docs.UserDocs
 import com.cuhacking.watershed.model.InputUser
 import com.cuhacking.watershed.model.OutputUser
+import io.bkbn.kompendium.Notarized.notarizedGet
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
@@ -28,7 +30,7 @@ class UserResource @Inject constructor(private val database: Database, private v
 
     fun Routing.routing() {
         route("/user") {
-            get("/") {
+            notarizedGet(UserDocs.getUserById) {
                 withContext(dispatcher) {
                     val list = database.usersQueries.getAll(::OutputUser).executeAsList();
                     call.respond(list)
@@ -67,5 +69,5 @@ class UserResource @Inject constructor(private val database: Database, private v
             }
         }
     }
-
 }
+

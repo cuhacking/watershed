@@ -4,6 +4,7 @@ flyway = "7.8.2"
 jbcrypt = "0.4"
 junit = "5.6.0"
 ktor = "1.5.1"
+kompendium = "1.2.2"
 kotlinArgparser = "2.0.7"
 testContainers = "1.15.2"
 
@@ -21,13 +22,18 @@ junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jun
 junit-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junit-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit" }
 
+kompendium-core = { module = "io.bkbn:kompendium-core", version.ref = "kompendium" }
+kompendium-swaggerui = { module = "io.bkbn:kompendium-swagger-ui", version.ref = "kompendium" }
+
 kotlinArgparser = { module = "com.xenomachina:kotlin-argparser", version.ref = "kotlinArgparser" }
 
 kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
 
+ktor-jackson = { module = "io.ktor:ktor-jackson", version.ref = "ktor" }
 ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
 ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization", version.ref = "ktor" }
+ktor-webjars = { module = "io.ktor:ktor-webjars", version.ref = "ktor" }
 
 testContainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testContainers" }
 testContainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testContainers" }
