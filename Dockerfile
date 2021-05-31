@@ -1,11 +1,11 @@
-FROM gradle:jdk15 AS builder
+FROM gradle:jdk16 AS builder
 
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
 
 RUN gradle :server:shadowJar
 
-FROM openjdk:15
+FROM openjdk:16
 
 COPY --from=builder /home/gradle/src/server/build/libs /usr/src/app
 WORKDIR /usr/src/app
