@@ -2,7 +2,7 @@ name: Build watershed development image
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build-server-image:
