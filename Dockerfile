@@ -3,7 +3,7 @@ FROM gradle:jdk16 AS builder
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
 
-RUN gradle :server:shadowJar
+RUN gradle :server:shadowJar --stacktrace
 
 FROM openjdk:16
 
