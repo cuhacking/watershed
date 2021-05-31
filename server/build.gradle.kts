@@ -8,6 +8,7 @@ plugins {
     kotlin("plugin.serialization") version "1.4.32"
     id("com.squareup.sqldelight") version "1.4.3"
     id("org.flywaydb.flyway") version "7.8.2"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
     application
 }
 
