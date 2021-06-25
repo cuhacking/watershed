@@ -21,26 +21,22 @@ class AuthResource @Inject constructor(private val database: Database,
                                        private val dispatcher: CoroutineDispatcher,
                                        private val jwtManager: JwtManager) {
     fun Routing.routing() {
-        route("/login") {
-            post("/") {
-                withContext(dispatcher) {
-                    val credentials = call.receive<InputCredentials>()
-                    val user = database.usersQueries.getByEmail(credentials.email).executeAsOneOrNull()
-                        ?: return@withContext call.respond(HttpStatusCode.Forbidden)
+        post("/login") {
+            withContext(dispatcher) {
+                val credentials = call.receive<InputCredentials>()
+                val user = database.usersQueries.getByEmail(credentials.email).executeAsOneOrNull()
+                    ?: return@withContext call.respond(HttpStatusCode.Forbidden)
 
-                    if (!BCrypt.checkpw(credentials.password, user.password))
-                        return@withContext call.respond(HttpStatusCode.Forbidden)
+                if (!BCrypt.checkpw(credentials.password, user.password))
+                    return@withContext call.respond(HttpStatusCode.Forbidden)
 
-                    call.respond(HttpStatusCode.OK, jwtManager.createJWT(user.uuid))
-                }
+                call.respond(HttpStatusCode.OK, jwtManager.createJWT(user.uuid))
             }
         }
 
-        route("/private") {
-            authenticate("auth-jwt") {
-                get("/") {
-                    call.respond("Authenticated!")
-                }
+        authenticate(JwtManager.jwtAuth) {
+            get("/private") {
+                call.respond("Authenticated!")
             }
 
         }
