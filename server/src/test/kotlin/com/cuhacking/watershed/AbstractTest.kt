@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import com.cuhacking.watershed.resources.UserResource
+import com.cuhacking.watershed.util.JwtManager
 import javax.inject.Inject
 import org.flywaydb.core.Flyway;
 
@@ -19,6 +20,11 @@ class TestMain(config: Config) {
 
     @Inject
     lateinit var userResource: UserResource
+
+    @Inject
+    lateinit var jwtManager: JwtManager
+
+    val config = config
 
     init {
         val dataModule = DataModule(config)
@@ -30,7 +36,7 @@ class TestMain(config: Config) {
 }
 
 fun Application.configureTest(main: TestMain) {
-    installFeatures()
+    installFeatures(main.config, main.jwtManager)
     routing {
         get("/") {
             call.application.environment.log.info("This is a hello world call")
