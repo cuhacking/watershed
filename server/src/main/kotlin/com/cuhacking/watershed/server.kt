@@ -62,7 +62,7 @@ fun Application.installFeatures(config: Config, jwtManager: JwtManager) {
         json()
     }
     install(Authentication) {
-        jwt(JwtManager.jwtAuth) {
+        jwt(JwtManager.JWT_AUTH) {
             realm = config.auth.issuer
             verifier(JWT
                 .require(jwtManager.algorithm)

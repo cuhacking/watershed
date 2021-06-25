@@ -12,7 +12,7 @@ import javax.inject.Inject
 class JwtManager @Inject constructor(private val config: Config, private val database: Database){
 
     companion object {
-        val JWT_AUTH= "jwt-auth"
+        val JWT_AUTH = "jwt-auth"
     }
 
     val algorithm: Algorithm = Algorithm.HMAC512(config.auth.secret)

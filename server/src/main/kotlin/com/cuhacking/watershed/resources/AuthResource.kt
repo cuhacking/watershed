@@ -34,7 +34,7 @@ class AuthResource @Inject constructor(private val database: Database,
             }
         }
 
-        authenticate(JwtManager.jwtAuth) {
+        authenticate(JwtManager.JWT_AUTH) {
             get("/private") {
                 call.respond("Authenticated!")
             }
