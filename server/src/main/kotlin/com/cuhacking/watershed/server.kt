@@ -1,5 +1,8 @@
 package com.cuhacking.watershed
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
+import com.cuhacking.watershed.config.Config
 import com.cuhacking.watershed.config.ConfigFactory
 import io.ktor.application.*
 import io.ktor.features.*
@@ -10,9 +13,13 @@ import io.ktor.serialization.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.embeddedServer
 import com.cuhacking.watershed.modules.DataModule
+import com.cuhacking.watershed.resources.AuthResource
 import com.cuhacking.watershed.resources.UserResource
+import com.cuhacking.watershed.util.JwtManager
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
+import io.ktor.auth.*
+import io.ktor.auth.jwt.*
 import org.slf4j.event.Level
 import javax.inject.Inject
 
@@ -24,7 +31,17 @@ class Arguments(parser: ArgParser) {
 class Main(configPath: String) {
 
     @Inject
+    lateinit var config: Config
+
+    @Inject
+    lateinit var jwtManager: JwtManager
+
+    // Resources
+    @Inject
     lateinit var userResource: UserResource
+
+    @Inject
+    lateinit var authResource: AuthResource
 
     init {
         val config = ConfigFactory.createConfig(configPath)
@@ -36,7 +53,7 @@ class Main(configPath: String) {
     }
 }
 
-fun Application.installFeatures() {
+fun Application.installFeatures(config: Config, jwtManager: JwtManager) {
     install(CallLogging) {
         level = Level.DEBUG
     }
@@ -44,12 +61,24 @@ fun Application.installFeatures() {
     install(ContentNegotiation) {
         json()
     }
+    install(Authentication) {
+        jwt(JwtManager.JWT_AUTH) {
+            realm = config.auth.issuer
+            verifier(JWT
+                .require(jwtManager.algorithm)
+                .withIssuer(config.auth.issuer)
+                .build())
+            validate { credential ->
+                jwtManager.validate(credential)
+            }
+        }
+    }
 }
 
 private fun Application.configure(args: Array<String>) {
     ArgParser(args).parseInto(::Arguments).run {
         val main = Main(config)
-        installFeatures()
+        installFeatures(main.config, main.jwtManager)
         routing {
             get("/") {
                 call.application.environment.log.info("This is a hello world call")
@@ -57,6 +86,10 @@ private fun Application.configure(args: Array<String>) {
             }
 
             with(main.userResource) {
+                routing()
+            }
+
+            with(main.authResource) {
                 routing()
             }
         }

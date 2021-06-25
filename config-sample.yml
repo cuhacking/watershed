@@ -2,3 +2,6 @@ database:
   jdbcUrl:
   username:
   password:
+auth:
+  issuer:
+  secret:

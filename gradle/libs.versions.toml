@@ -3,7 +3,7 @@ dagger = "2.31.2"
 flyway = "7.8.2"
 jbcrypt = "0.4"
 junit = "5.6.0"
-ktor = "1.5.1"
+ktor = "1.6.0"
 kotlinArgparser = "2.0.7"
 testContainers = "1.15.2"
 
@@ -28,6 +28,8 @@ kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
 ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
 ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization", version.ref = "ktor" }
+ktor-auth-core = { module = "io.ktor:ktor-auth", version.ref = "ktor" }
+ktor-auth-jwt = { module = "io.ktor:ktor-auth-jwt", version.ref = "ktor" }
 
 testContainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testContainers" }
 testContainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testContainers" }

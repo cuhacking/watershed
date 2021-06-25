@@ -11,12 +11,18 @@ data class DatabaseConfig(
 )
 
 @Serializable
-data class Config(val database: DatabaseConfig)
+data class AuthConfig(
+    val issuer: String = "",
+    val secret: String = "",
+)
+
+@Serializable
+data class Config(val database: DatabaseConfig, val auth: AuthConfig)
 
 object ConfigFactory {
         fun createConfig(jdbcUrl: String, username: String, password: String) : Config {
             val databaseConfig = DatabaseConfig(jdbcUrl, username, password)
-            return Config(databaseConfig)
+            return Config(databaseConfig, AuthConfig())
         }
 
         fun createConfig(filePath: String) : Config {
