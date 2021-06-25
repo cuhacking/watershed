@@ -74,6 +74,5 @@ abstract class AbstractTest {
             .dataSource(jdbcUrl, DB_USERNAME, DB_PASSWORD)
             .load()
         flyway.migrate()
-        println(flyway.info())
     }
 }

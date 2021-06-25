@@ -5,8 +5,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 plugins {
     kotlin("jvm")
     kotlin("kapt")
-    kotlin("plugin.serialization") version "1.4.32"
-    id("com.squareup.sqldelight") version "1.4.3"
+    kotlin("plugin.serialization") version "1.5.20"
+    id("com.squareup.sqldelight") version "1.5.0"
     id("org.flywaydb.flyway") version "7.8.2"
     id("com.github.johnrengelman.shadow") version "7.0.0"
     application
@@ -28,7 +28,7 @@ dependencies {
     implementation(libs.jbcrypt)
     implementation(libs.kotlinArgparser)
 
-    testImplementation(kotlin("test-junit5"))
+    testImplementation(kotlin("test-junit"))
     testImplementation(libs.junit.api)
     testImplementation(libs.junit.params)
     testImplementation(libs.ktor.server.test)
