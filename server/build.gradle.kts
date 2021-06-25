@@ -16,6 +16,8 @@ dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.ktor.server.cio)
     implementation(libs.ktor.serialization)
+    implementation(libs.ktor.auth.core)
+    implementation(libs.ktor.auth.jwt)
 
     implementation(libs.dagger.core)
     kapt(libs.dagger.compiler)

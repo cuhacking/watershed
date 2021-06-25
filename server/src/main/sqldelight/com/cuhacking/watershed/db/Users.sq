@@ -1,6 +1,9 @@
 getByUuid:
 SELECT uuid, name, email FROM users WHERE uuid = :uuid;
 
+getByEmail:
+SELECT uuid, email, password FROM users WHERE email = :email;
+
 getAll:
 SELECT uuid, name, email FROM users;
 

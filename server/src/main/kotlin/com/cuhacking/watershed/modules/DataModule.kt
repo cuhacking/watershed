@@ -9,6 +9,7 @@ import javax.inject.Singleton
 import javax.sql.DataSource
 import com.zaxxer.hikari.HikariDataSource
 import com.cuhacking.watershed.config.Config
+import com.cuhacking.watershed.util.JwtManager
 
 @Module
 class DataModule(val config: Config) {
@@ -32,4 +33,9 @@ class DataModule(val config: Config) {
 
     @Provides
     fun providesConfig(): Config = config
+
+    @Provides
+    fun providesJwtManager(config: Config, database: Database): JwtManager {
+        return JwtManager(config, database)
+    }
 }
